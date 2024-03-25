@@ -1,0 +1,15 @@
+.music-player .btn {
+  text-align: center;
+  padding: 0.3rem 0.8rem;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f8f9fa;
+  color: #495057;
+  transition: all 0.2s;
+}
+
+.music-player .btn:hover {
+  background-color: #495057;
+  color: #f8f9fa;
+}
