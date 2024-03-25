@@ -143,7 +143,7 @@ export default function Sidebar() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{ bgcolor: "#968382", height: 750, color: "#fff" }}>
+        <List sx={{ bgcolor: "#968382", height: 760, color: "#fff" }}>
           {["Time and Order", "Text", "Upload Image", "Another Feature"].map(
             (text, index) => (
               <ListItem
@@ -185,7 +185,7 @@ export default function Sidebar() {
           component="main"
           mt={8}
           p={1}
-          sx={{ width: 250, height: 750, bgcolor: "#534342", color: "#fff" }}
+          sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
         >
           {slideIndex === 0 && (
             /* This is the place for the first icons component etc...*/
