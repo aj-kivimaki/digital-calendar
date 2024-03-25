@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
@@ -91,8 +91,8 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [slideIndex, setSlideIndex] = React.useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+  const [slideIndex, setSlideIndex] = useState<number | null>(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
