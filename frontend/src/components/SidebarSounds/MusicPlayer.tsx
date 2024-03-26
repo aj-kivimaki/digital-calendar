@@ -1,10 +1,7 @@
 import { useState, useRef } from "react";
 
-// styles
-import "./MusicPlayer.css";
-
 // icons
-import HearingIcon from "@mui/icons-material/Hearing";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 
 type Props = {
@@ -25,13 +22,13 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
     }
 
     setIsPlaying(!isPlaying);
-    audio.onended = () => setIsPlaying(false);
+    audio.onended = () => setIsPlaying(false); // Reset play button when audio ends
   };
 
   return (
-    <div className="music-player">
+    <div>
       <button className="btn" onClick={togglePlay}>
-        {!isPlaying ? <HearingIcon /> : <StopCircleIcon />}
+        {!isPlaying ? <PlayCircleIcon /> : <StopCircleIcon />}
       </button>
     </div>
   );

@@ -20,7 +20,7 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 
 // components
-import SidebarSounds from "./SidebarSounds";
+import SidebarSounds from "./SidebarSounds/SidebarSounds";
 
 const drawerWidth = 220;
 
@@ -148,7 +148,7 @@ export default function Sidebar() {
         </DrawerHeader>
         <Divider />
         <List sx={{ bgcolor: "#968382", height: 760, color: "#fff" }}>
-          {["Time and Order", "Text", "Upload Image", "Another Feature"].map(
+          {["Time and Order", "Text", "Upload Image", "Sounds"].map(
             (text, index) => (
               <ListItem
                 onClick={() => toggleSlideOpen(index)}
