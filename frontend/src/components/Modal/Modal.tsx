@@ -12,6 +12,8 @@ type Props = {
   setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   amountOfWindows: number;
+  windowContent: WindowContent[];
+  setWindowContent: (windowContent: WindowContent[]) => void;
 };
 
 type ContentVisibility = {
@@ -21,6 +23,7 @@ type ContentVisibility = {
 interface WindowContent {
   videoURL: string;
   text: string;
+  imageURL: string;
 }
 
 const Modal: React.FC<Props> = ({
@@ -29,11 +32,10 @@ const Modal: React.FC<Props> = ({
   openModal,
   setOpenModal,
   amountOfWindows,
+  windowContent,
+  setWindowContent,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
-  const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(amountOfWindows).fill({ videoURL: "", text: "" })
-  );
 
   useEffect(() => {
     if (openModal) {
@@ -41,8 +43,16 @@ const Modal: React.FC<Props> = ({
       if (savedContent) {
         setWindowContent(JSON.parse(savedContent));
       }
+    } else {
+      // Initialize content for each day if not present
+      const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
+        videoURL: "",
+        text: "",
+        imageURL: "",
+      }));
+      setWindowContent(newWindowContent);
     }
-  }, [openModal, day]);
+  }, [openModal, day, setWindowContent, amountOfWindows]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -60,8 +70,6 @@ const Modal: React.FC<Props> = ({
 
   const handleSave = () => {
     localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
-    console.log(`${day}. window's videoURL: ${videoURL}`);
-    console.log(text);
     setOpenModal(false);
   };
 
@@ -73,7 +81,27 @@ const Modal: React.FC<Props> = ({
     }));
   };
 
-  const { videoURL, text } = windowContent[day - 1];
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const newWindowContent = [...windowContent];
+      newWindowContent[day - 1] = {
+        ...newWindowContent[day - 1],
+        imageURL: reader.result as string,
+      };
+      setWindowContent(newWindowContent);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const { videoURL, text, imageURL } = windowContent[day - 1] || {
+    videoURL: "",
+    text: "",
+    imageURL: "",
+  };
 
   return (
     <div className="modal">
@@ -92,6 +120,29 @@ const Modal: React.FC<Props> = ({
         </div>
       </div>
       <h1>{day}</h1>
+
+      <div className="image-input" style={{ margin: "20px" }}>
+        <label htmlFor="image-upload">Upload Image:</label>
+        <input
+          id="image-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+        <div>
+          {imageURL && (
+            <>
+              <p>Your saved image:</p>
+              <img
+                src={imageURL}
+                alt="Uploaded"
+                style={{ maxWidth: "200px" }}
+              />
+            </>
+          )}
+        </div>
+      </div>
+
       <div className="texts">
         <TextField
           id="outlined-basic"
@@ -115,6 +166,7 @@ const Modal: React.FC<Props> = ({
           <CloseIcon />
         </div>
       )}
+
       <label className="video-input">
         <h3 onClick={() => toggleContent("video-input")}>
           <button> Add a video</button>
