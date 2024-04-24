@@ -1,53 +1,62 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Grid from '@mui/material/Grid';
-import './ExistingImageGallery.css'; 
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Grid from "@mui/material/Grid";
+import "./ExistingImageGallery.css";
 
-const CalendarEditor = () => {
+type Props = {
+  setSelectedBackground: (backgroundUrl: string) => void;
+  selectedBackground: string;
+};
+
+const CalendarEditor: React.FC<Props> = ({
+  setSelectedBackground,
+  selectedBackground,
+}) => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRandomImages = async () => {
       try {
-        const response = await axios.get('https://api.unsplash.com/photos/random', {
-          params: {
-            count: 12, 
-            client_id: 'A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE', 
-          },
-        });
+        const response = await axios.get(
+          "https://api.unsplash.com/photos/random",
+          {
+            params: {
+              count: 12,
+              client_id: "A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE",
+            },
+          }
+        );
         const imageUrls = response.data.map((photo: any) => photo.urls.regular);
         setRandomImages(imageUrls);
       } catch (error) {
-        console.error('Error fetching random images:', error);
+        console.error("Error fetching random images:", error);
       }
     };
 
     fetchRandomImages();
-
-    return () => {
-      document.body.style.backgroundImage = '';
-      document.body.style.backgroundRepeat = '';
-      document.body.style.backgroundSize = '';
-      document.body.style.backgroundPosition = '';
-      document.body.style.maxWidth = '';
-      document.body.style.height = '';
-    };
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
-    document.body.style.backgroundImage = `url(${imageUrl})`; 
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.maxWidth = '100%';
-    document.body.style.height = '100%';
   };
 
+  useEffect(() => {
+    const container = document.getElementById("preview-container");
+    if (container) {
+      if (selectedBackground) {
+        container.style.backgroundImage = `url(${selectedBackground})`;
+        container.style.backgroundRepeat = "no-repeat";
+        container.style.backgroundSize = "cover";
+        container.style.backgroundPosition = "center";
+        container.style.maxWidth = "100%";
+        container.style.height = "100%";
+      }
+    }
+  }, [selectedBackground]);
+
   return (
-    <div className='dashboard-container'>
-      <div className='dashboard-images'>
+    <div className="dashboard-container">
+      <div className="dashboard-images">
         <Grid container spacing={1}>
           {randomImages.map((imageUrl, index) => (
             <Grid item key={index}>
@@ -55,14 +64,14 @@ const CalendarEditor = () => {
                 src={imageUrl}
                 alt={`Random Image ${index + 1}`}
                 onClick={() => handleImageClick(imageUrl)}
-                className='dashboard-image'
+                className="dashboard-image"
               />
             </Grid>
           ))}
         </Grid>
       </div>
 
-      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
+      {/* <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
     </div>
   );
 };

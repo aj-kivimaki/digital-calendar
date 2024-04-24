@@ -14,13 +14,15 @@ localhost:8000
 
 - GET all calendars: `/firestore/calendars`
 
-- GET calendar by id: `/firestore/calendars/:uid`
+- GET calendar by id: `/firestore/calendars/:calendarId`
 
-- POST (add) calendar: `/firestore/calendars`
+- POST (add) calendar: `/firestore/calendars` ✅
 
-- PUT (update) calendar: `/firestore/calendars/:uid`
+This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
-- DELETE calendar: `/firestore/calendars/:uid`
+- PUT (update) calendar: `/firestore/calendars/:calendarId`
+
+- DELETE calendar: `/firestore/calendars/:calendarId`
 
 ### STORAGE (image/sound files)
 
@@ -32,7 +34,7 @@ localhost:8000
 
 - GET image by name: `/storage/images/:imageName`
 
-- POST (add) image: `/storage/images/`
+- POST (add) image: `/storage/images/` ✅
 
 - DELETE: `/storage/images/:imageName`
 
@@ -40,22 +42,23 @@ localhost:8000
 
 - GET music by name: `/storage/sounds/music/:musicName`
 
-- POST (add) music: `/storage/sounds/music`
+- POST (add) music: `/storage/sounds/music` ✅
 
 - DELETE: `/storage/sounds/music/:musicName`
 
 #### SOUNDS - SOUND-FX
 
-- GET soundFx by name: `/storage/sounds/soundfx/:soundFxName`
+- GET soundFx by name: `/storage/sounds/soundFx/:soundFxName`
 
-- POST (add) soundFx: `/storage/sounds/soundfx`
+- POST (add) soundFx: `/storage/sounds/soundFx` ✅
 
-- DELETE: `/storage/sounds/soundfx/:soundFxName`
+- DELETE: `/storage/sounds/soundFx/:soundFxName`
 
 ### AUTH
 
-- POST (create a user): `/auth/signup`
+- POST (create a user): `/auth/signup` ✅
 
+  - name
   - email
   - password
 
