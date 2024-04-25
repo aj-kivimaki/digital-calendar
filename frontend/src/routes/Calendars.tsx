@@ -1,35 +1,65 @@
-import { Link } from "react-router-dom";
-import "./Calendar.css";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Calendar_Card from '../components/Calendar_Card';
 
-// all the calendars with at least name, calendarId and genre
-// we will fetch this data from the backend
-const calendars = [
-  {
-    calendarName: "Christmas in Finland",
-    genre: "Christmas",
-    calendarId: "szGRluF3w8jMKbS7B7v8",
-  },
-  {
-    calendarName: "Summer in Finland",
-    genre: "Summer",
-    calendarId: "wC53DjFvlaStbhzlvFSV",
-  },
-];
+interface Calendar {
+  calendarId: string;
+  calendarName: string;
+  data: {
+    windows: string[];
+    text: {
+      title: string;
+      titleFont: string;
+      titleFontSize: number;
+      titleColor: string;
+      subtitle: string;
+      subtitleFont: string;
+      subtitleFontSize: number; // Fixed typo here
+      subtitleColor: string;
+    };
+    sounds: {
+      musicName: string;
+      soundFxName: string;
+    };
+    image: {
+      imageUrl: string;
+      uploadedImageName: string;
+    };
+    windowsContent: string[];
+    // Add more properties as needed
+  };
+}
 
-const Calendars = () => {
+const Calendars: React.FC = () => {
+  const [calendars, setCalendars] = useState<Calendar[]>([]);
+
+  const getCalendars = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:8000/firestore/calendars'
+      );
+      console.log('firestore/calendars');
+      console.log(response.data);
+      setCalendars(response.data);
+    } catch (error) {
+      console.error('Error fetching calendars:', error);
+    }
+  };
+
+  useEffect(() => {
+    getCalendars();
+  }, []);
+
   return (
     <div>
-      <h1>All the calendars made with this app</h1>
-      <div className="calendars">
-        {calendars.map((calendar) => (
-          <div key={calendar.calendarId} className="calendar-card">
-            <h2>{calendar.calendarName}</h2>
-            <Link to={`/calendars/${calendar.calendarId}`}>View</Link>
-            <p>{calendar.genre}</p>
-            <p>By: 'user name here'</p>
-          </div>
-        ))}
-      </div>
+      <h1 style={{ textAlign: 'center' }}>
+        All the calendars ({calendars.length}) made with this app
+      </h1>
+      <Calendar_Card
+        calendars={calendars} // Pass calendars as prop
+        search={''}
+        setSearch={() => {}}
+      />
     </div>
   );
 };
