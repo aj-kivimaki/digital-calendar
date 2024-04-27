@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import EmbedVideo from "../EmbedVideo/EmbedVideo";
+import axios from "axios";
+
 import "./Modal.css";
 
+import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import { TextField, Button } from "@mui/material";
-
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
+
 import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
@@ -24,8 +25,8 @@ type ContentVisibility = {
 
 export interface WindowContent {
   videoURL: string;
+  imageFILE: string;
   text: string;
-  imageURL: string;
   uploadedImageName?: string;
 }
 
@@ -49,16 +50,8 @@ const Modal: React.FC<Props> = ({
       if (savedContent) {
         setWindowContent(JSON.parse(savedContent));
       }
-    } else {
-      // Initialize content for each day if not present
-      const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
-        videoURL: "",
-        text: "",
-        imageURL: "",
-      }));
-      setWindowContent(newWindowContent);
     }
-  }, [openModal, day, setWindowContent, amountOfWindows]);
+  }, [openModal, day, setWindowContent]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -96,7 +89,7 @@ const Modal: React.FC<Props> = ({
       const newWindowContent = [...windowContent];
       newWindowContent[day - 1] = {
         ...newWindowContent[day - 1],
-        imageURL: reader.result as string,
+        imageFILE: reader.result as string,
         uploadedImageName: file.name,
       };
       setWindowContent(newWindowContent);
@@ -127,11 +120,7 @@ const Modal: React.FC<Props> = ({
       });
   };
 
-  const { videoURL, text, imageURL } = windowContent[day - 1] || {
-    videoURL: "",
-    text: "",
-    imageURL: "",
-  };
+  const { videoURL, text, imageFILE } = windowContent[day - 1];
 
   return (
     <div className={`modal ${openModal ? "open" : ""}`}>
@@ -161,11 +150,11 @@ const Modal: React.FC<Props> = ({
             onChange={handleImageUpload}
           />
           <div>
-            {imageURL && (
+            {imageFILE && (
               <>
                 <p>Your saved image:</p>
                 <img
-                  src={imageURL}
+                  src={imageFILE}
                   alt="Uploaded"
                   style={{ maxHeight: "150px" }}
                 />
