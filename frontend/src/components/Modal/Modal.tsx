@@ -5,6 +5,8 @@ import "./Modal.css";
 import { TextField, Button } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   day: number;
@@ -36,6 +38,9 @@ const Modal: React.FC<Props> = ({
   setWindowContent,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
+
+  const uid = useAppSelector((state) => state.uid.uid);
+  const token = useAppSelector((state) => state.token.token);
 
   useEffect(() => {
     if (openModal) {
@@ -95,6 +100,29 @@ const Modal: React.FC<Props> = ({
       setWindowContent(newWindowContent);
     };
     reader.readAsDataURL(file);
+
+    // upload image to database
+    const formData = new FormData();
+
+    formData.append("image", file);
+    formData.append("uid", uid);
+
+    axios
+      .post(`http://localhost:8000/storage/images`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // Send token in request headers
+          "x-access-token": token,
+        },
+      })
+      .then((response) => {
+        console.log(`image`, response.data);
+      })
+      .catch(() => {
+        console.log(
+          `Error uploading image: Login to upload. UID and / or token required. `
+        );
+      });
   };
 
   const { videoURL, text, imageURL } = windowContent[day - 1] || {
@@ -104,101 +132,99 @@ const Modal: React.FC<Props> = ({
   };
 
   return (
- 
-    <div className={`modal ${openModal ? 'open' : ''}`}>
-    <div className="modal-backdrop" onClick={() => setOpenModal(false)}></div>
-    <div className="modal-content">
-      <div className="modal-navigation"> 
-        <div>Window: {day}</div>
-        <div
-          className="modal-navigation-item"
-          onClick={() => handleClick("previous")}
-        >
-          Previous window
+    <div className={`modal ${openModal ? "open" : ""}`}>
+      <div className="modal-backdrop" onClick={() => setOpenModal(false)}></div>
+      <div className="modal-content">
+        <div className="modal-navigation">
+          <div>Window: {day}</div>
+          <div
+            className="modal-navigation-item"
+            onClick={() => handleClick("previous")}
+          >
+            Previous window
+          </div>
+          <div
+            className="modal-navigation-item"
+            onClick={() => handleClick("next")}
+          >
+            Next window
+          </div>
         </div>
-        <div
-          className="modal-navigation-item"
-          onClick={() => handleClick("next")}
-        >
-          Next window
+        <div className="image-input" style={{ margin: "20px" }}>
+          <label htmlFor="image-upload">Upload Image:</label>
+          <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+          <div>
+            {imageURL && (
+              <>
+                <p>Your saved image:</p>
+                <img
+                  src={imageURL}
+                  alt="Uploaded"
+                  style={{ maxHeight: "150px" }}
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="image-input" style={{ margin: "20px" }}>
-        <label htmlFor="image-upload">Upload Image:</label>
-        <input
-          id="image-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-        <div>
-          {imageURL && (
+
+        <div className="texts">
+          <TextField
+            id="outlined-basic"
+            multiline
+            rows={4}
+            label="Text"
+            variant="outlined"
+            value={text}
+            onChange={(e) =>
+              setWindowContent(
+                windowContent.map((item, index) =>
+                  index === day - 1 ? { ...item, text: e.target.value } : item
+                )
+              )
+            }
+          />
+        </div>
+
+        {openModal && (
+          <div className="close-modal" onClick={() => setOpenModal(false)}>
+            <CloseIcon />
+          </div>
+        )}
+
+        <label className="video-input">
+          <h3 onClick={() => toggleContent("video-input")}>
+            <button> Add a video</button>
+          </h3>
+          {contentVisible["video-input"] && (
             <>
-              <p>Your saved image:</p>
-              <img
-                src={imageURL}
-                alt="Uploaded"
-                style={{ maxHeight: "150px"}}
+              <span className="span-text">Paste your URL here: </span>
+              <input
+                type="text"
+                value={videoURL}
+                onChange={(e) =>
+                  setWindowContent(
+                    windowContent.map((item, index) =>
+                      index === day - 1
+                        ? { ...item, videoURL: e.target.value }
+                        : item
+                    )
+                  )
+                }
               />
+              <EmbedVideo videoURL={videoURL} />
             </>
           )}
-        </div>
-      </div>
-
-      <div className="texts">
-        <TextField
-          id="outlined-basic"
-          multiline
-          rows={4}
-          label="Text"
-          variant="outlined"
-          value={text}
-          onChange={(e) =>
-            setWindowContent(
-              windowContent.map((item, index) =>
-                index === day - 1 ? { ...item, text: e.target.value } : item
-              )
-            )
-          }
-        />
-      </div>
-
-      {openModal && (
-        <div className="close-modal" onClick={() => setOpenModal(false)}>
-          <CloseIcon />
-        </div>
-      )}
-
-      <label className="video-input">
-        <h3 onClick={() => toggleContent("video-input")}>
-          <button> Add a video</button>
-        </h3>
-        {contentVisible["video-input"] && (
-          <>
-            <span className="span-text">Paste your URL here: </span>
-            <input
-              type="text"
-              value={videoURL}
-              onChange={(e) =>
-                setWindowContent(
-                  windowContent.map((item, index) =>
-                    index === day - 1
-                      ? { ...item, videoURL: e.target.value }
-                      : item
-                  )
-                )
-              }
-            />
-            <EmbedVideo videoURL={videoURL} />
-          </>
-        )}
-      </label>
-      <Button variant="contained" color="primary" onClick={handleSave}>
-        Save
-      </Button>
+        </label>
+        <Button variant="contained" color="primary" onClick={handleSave}>
+          Save
+        </Button>
       </div>
     </div>
- 
   );
 };
 
