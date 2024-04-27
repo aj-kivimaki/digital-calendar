@@ -25,8 +25,9 @@ type ContentVisibility = {
 
 export interface WindowContent {
   videoURL: string;
-  imageFILE: string;
+  imageURL: string;
   text: string;
+  imageFILE: string;
   uploadedImageName?: string;
 }
 

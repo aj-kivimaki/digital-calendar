@@ -9,6 +9,7 @@ import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
 import Modal from "../components/Modal/Modal";
 import PreviewModal from "../components/PreviewModal/PreviewModal";
+import type { WindowContent } from "/Users/s2301201/Desktop/Code/caas/frontend/src/components/Modal/Modal";
 // import CalendarEditor from "./SidebarPictures/ExistingImageGallery";
 
 import { Button, Typography } from "@mui/material";
@@ -41,12 +42,6 @@ type Props = {
   selectedBackground: string;
   uploadedImageName: string;
 };
-
-interface WindowContent {
-  text: string;
-  videoURL: string;
-  imageURL: string;
-}
 
 interface Json {
   ownerUid: string;
@@ -95,7 +90,12 @@ const Preview: React.FC<Props> = ({
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(windows.length).fill({ imageURL: "", videoURL: "", text: "" })
+    Array(windows.length).fill({
+      imageURL: "",
+      videoURL: "",
+      text: "",
+      imageFILE: "",
+    })
   );
 
   const token = useAppSelector((state) => state.token.token);
