@@ -26,6 +26,7 @@ export interface WindowContent {
   videoURL: string;
   text: string;
   imageURL: string;
+  uploadedImageName?: string;
 }
 
 const Modal: React.FC<Props> = ({
@@ -96,6 +97,7 @@ const Modal: React.FC<Props> = ({
       newWindowContent[day - 1] = {
         ...newWindowContent[day - 1],
         imageURL: reader.result as string,
+        uploadedImageName: file.name,
       };
       setWindowContent(newWindowContent);
     };
