@@ -94,7 +94,6 @@ const Preview: React.FC<Props> = ({
       imageURL: "",
       videoURL: "",
       text: "",
-      imageFILE: "",
     })
   );
 
