@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ExistingImageGallery from "./ExistingImageGallery";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import axios from "axios";
@@ -15,10 +15,13 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
   setSelectedBackground,
   selectedBackground,
   setUploadedImageName,
+  
 }) => {
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
+  const [searchQuery, setSearchQuery] = useState("");
 
+  
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
 
@@ -66,6 +69,21 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
         onChange={handleImageUpload}
         aria-labelledby="upload-label"
       />
+
+{/* <input
+        type="text"
+        placeholder="Search images..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{ marginTop: '20px', marginBottom: '10px' }}
+      />
+
+      <ExistingImageGallery
+        searchQuery={searchQuery}
+        setSelectedBackground={setSelectedBackground}
+        selectedBackground={selectedBackground}
+        onImageSelect={setSelectedBackground}
+      /> */}
 
       <div>
         <h3>Select backgrounds:</h3>

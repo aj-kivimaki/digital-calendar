@@ -59,6 +59,7 @@ const CalendarEditor: React.FC<Props> = ({
   return (
     <div className="dashboard-container">
       <div className="dashboard-images">
+        
         <Grid container spacing={1}>
           {randomImages.map((imageUrl, index) => (
             <Grid item key={index}>
@@ -73,7 +74,6 @@ const CalendarEditor: React.FC<Props> = ({
         </Grid>
       </div>
 
-      {/* <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
     </div>
   );
 };
