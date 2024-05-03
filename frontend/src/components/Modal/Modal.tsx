@@ -132,7 +132,17 @@ const Modal: React.FC<Props> = ({
     text: "",
     imageURLModal: "",
   };
-
+  //to remove uploaded img
+  const handleRemoveImage = () => {
+    const newWindowContent = [...windowContent];
+    newWindowContent[day - 1] = {
+      ...newWindowContent[day - 1],
+      imageURLModal: "",
+      uploadedImageName: "",
+    };
+    setWindowContent(newWindowContent);
+  };
+  
   return (
  
     <div className={`modal ${openModal ? 'open' : ''}`}>
@@ -169,7 +179,10 @@ const Modal: React.FC<Props> = ({
                 src={imageURLModal}
                 alt="Uploaded"
                 style={{ maxHeight: "150px"}}
-              />
+              /> <br/>
+      <Button variant="contained" color="secondary" onClick={handleRemoveImage}>
+        Remove
+      </Button>
             </>
           )}
         </div>

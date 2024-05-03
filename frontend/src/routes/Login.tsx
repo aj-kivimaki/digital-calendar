@@ -15,6 +15,8 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+
+  
   const handleLogin = async () => {
     try {
       const newUser = await loginWithEmailAndPassword(email, password);
