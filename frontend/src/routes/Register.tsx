@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Avatar, Button, CssBaseline, TextField, Link, Paper, Box, Grid, Typography } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Avatar, Box, Button, CssBaseline, Grid, Link, Paper, Typography } from '@mui/material';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 
 const theme = createTheme();
 
@@ -70,67 +70,39 @@ export default function Register() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 3 }}>
+              <CalendarMonthIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Register
             </Typography>
             <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
+              <InputField
                 label="Your Name"
-                name="name"
-                autoComplete="name"
-                autoFocus
                 value={name}
-                onChange={e => setName(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
+                onChange={e => setName(e.target.value)} type={undefined} error={undefined} helperText={undefined}              />
+              <InputField
                 label="Email Address"
-                name="email"
-                autoComplete="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
+                onChange={e => setEmail(e.target.value)} type={undefined} error={undefined} helperText={undefined}              />
+              <InputField
                 label="Password"
                 type="password"
-                id="password"
-                autoComplete="current-password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 error={passwordError.length > 0}
                 helperText={passwordError}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="confirmPassword"
+              <InputField
                 label="Confirm Password"
                 type="password"
-                id="confirmPassword"
-                autoComplete="current-password"
                 value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-              />
+                onChange={e => setConfirmPassword(e.target.value)} error={undefined} helperText={undefined}              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, color: 'white', backgroundColor: '#10617a'}}
               >
                 Register
               </Button>
@@ -148,3 +120,35 @@ export default function Register() {
     </ThemeProvider>
   );
 }
+
+const InputField = ({ label, value, onChange, type, error, helperText }: {
+  label: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  type?: string;
+  error?: boolean;
+  helperText?: string;
+}) => (
+  <Box sx={{ mb: 2 }}>
+    <Typography variant="body2" sx={{ mb: 1 }}>
+      {label}
+    </Typography>
+    <input
+      type={type || 'text'}
+      value={value}
+      onChange={onChange}
+      style={{
+        padding: '10px',
+        fontSize: '16px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        width: '100%',
+      }}
+    />
+    {error && (
+      <Typography variant="body2" sx={{ color: 'red' }}>
+        {helperText}
+      </Typography>
+    )}
+  </Box>
+);
