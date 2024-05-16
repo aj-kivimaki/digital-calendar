@@ -3,6 +3,8 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import Login from "./Login";
 import Favourite from "./Favourite";
 import { useAppSelector } from "../hooks/useAppDispatch";
+import MainPricing from "../components/LandingPage/Pricing/MainPricing";
+import Ban from "../components/LandingPage/banner/ban";
 
 type Props = {
   search: string;
@@ -16,12 +18,11 @@ const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   return (
     <div>
       <ParallaxProvider>
-        <BannerTop />
+        <Ban></Ban>
+        {/* <BannerTop /> */}
+        <MainPricing ></MainPricing>
         <div style={{ marginBottom: "250px" }}>
           {!token && <Login />}
-          {/* <div className="center full">
-            <h1 className="headline gray"></h1>
-          </div>  */}
           {token && (
             <Favourite
               search={search}

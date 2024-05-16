@@ -13,12 +13,15 @@ import {
 } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./headerStyles.module.css";
-import Logout from "./Logout";
+import Logout from "../Logout";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../auth/firebase";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import { auth } from "../../../auth/firebase";
+import { useAppSelector } from "../../../hooks/useAppDispatch";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AccountCircle } from "@mui/icons-material";
+
+// Import your logo here
+import yodaLogo from "./yoda.png";
 
 const Header: React.FC = () => {
   const [user] = useAuthState(auth);
@@ -55,9 +58,9 @@ const Header: React.FC = () => {
   const drawerContent = (
     <div>
       <List>
-        {menuItems.map((item, index) => (
+        {menuItems.map((item) => (
           <ListItem
-            key={index}
+            key={item.link}
             onClick={() => navigate(item.link)}
             style={{ cursor: "pointer" }}
           >
@@ -85,9 +88,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
-      <AppBar position="static" sx={{ backgroundColor: "#10617a" }}>
+<AppBar position="static" sx={{ backgroundColor: "rgb(46, 12, 6)", zIndex: 1 }}>
         <Toolbar>
+        <Link to="/" style={{ textDecoration: "none" }}>
+  <img src={yodaLogo} alt="Yoda Logo" style={{ height: "30px", marginRight: "10px", cursor: "pointer" }} />
+</Link>
           <div className={`${styles.grow} ${styles.leftAlign}`}>
             {isMobileView && location.pathname !== "/panel" ? (
               <>
@@ -109,8 +114,8 @@ const Header: React.FC = () => {
                 </Drawer>
               </>
             ) : (
-              menuItems.map((item, index) => (
-                <Link to={item.link} className={styles.navLink} key={index}>
+              menuItems.map((item) => (
+                <Link to={item.link} className={styles.navLink} key={item.link}>
                   <Button color="inherit">{item.text}</Button>
                 </Link>
               ))
@@ -156,7 +161,6 @@ const Header: React.FC = () => {
           </div>
         </Toolbar>
       </AppBar>
-    </>
   );
 };
 
