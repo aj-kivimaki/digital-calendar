@@ -83,15 +83,15 @@ export const MainContainer = styled.div<{ shadow: string }>`
   font-family: "Raleway", sans-serif;
   width: 18rem;
   height: max-content;
-  background-color: black;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  color: white;
+  color: black;
   box-shadow: 0 8px 14px -6px ${(props) => props.shadow};
   transition: 0.4s ease-in-out;
   border-radius: 1rem; 
   margin-bottom: 5rem;
-  
+
   &:hover {
     box-shadow: 0 8px 26px -6px ${(props) => props.shadow};
     margin-bottom: 0.4rem;
@@ -113,7 +113,8 @@ export const Header = styled.div<{ background?: string }>`
   justify-content: center;
   align-items: center;
   font-weight: 400;
-  border-radius: 1rem; 
+  border-radius: 10rem; 
+  border: 3px solid purple;
 
   @media screen and (max-width: 768px) {
     margin: 0.3rem;
@@ -195,7 +196,6 @@ export const Button = styled.button`
   align-items: center;
   text-transform: uppercase;
   border-radius: 0.3rem;
-  border: 0.2rem solid #1d3557;
   width: 90%;
   height: 3.5rem;
   font-size: 1rem;

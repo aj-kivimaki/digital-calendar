@@ -5,9 +5,8 @@ function App() {
   return (
     <>
     <div style={{textAlign: "center",
-    fontSize: "22px",
-    marginBottom: "2rem"}}>
-      <h1>Our Pricing</h1>
+    fontSize: "25px"}}>
+      <h2>Our Pricing</h2>
       <p>Choose the plan that fits your needs</p>
     </div>
     <MainContainer>
@@ -19,8 +18,7 @@ function App() {
           ]}
           price={0}
           duration="y"
-          background="linear-gradient(120deg, black 0%, gray 60%, white 100%)"
-          shadow="#96e6a1"
+          shadow="#ffffff"
           currency="€"
           buttonContent="Get Started"
           priceText="Create your calendar and share it with the world."
@@ -35,8 +33,7 @@ function App() {
           ]}
           price={5}
           duration="m"
-          background="linear-gradient(120deg, black 0%, gray 60%, white 100%)"
-          shadow="#96e6a1"
+          shadow="#ffffff"
           currency="€"
           buttonContent="Get Started"
           priceText="Bring your designs to the next level and export them."
@@ -51,8 +48,7 @@ function App() {
           ]}
           price={55}
           duration="y"
-          background="linear-gradient(120deg, black 0%, gray 60%, white 100%)"
-          shadow="#96e6a1"          
+          shadow="#ffffff"          
           currency="€"
           buttonContent="Get Started"
           priceText="Enjoy limitless use with interactive export options."
@@ -70,6 +66,7 @@ display: flex;
   align-items: center;
   padding: 9rem 0;
   border-radius: 1.6rem;
+  background: black
   @media screen and (max-width: 970px) {
     flex-direction: column;
     padding: 5rem 0;
