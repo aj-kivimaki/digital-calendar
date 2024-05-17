@@ -83,7 +83,7 @@ export const MainContainer = styled.div<{ shadow: string }>`
   font-family: "Raleway", sans-serif;
   width: 18rem;
   height: max-content;
-  background-color: transparent;
+  background-color: black;
   display: flex;
   flex-direction: column;
   color: white;
@@ -105,7 +105,7 @@ export const MainContainer = styled.div<{ shadow: string }>`
 
 export const Header = styled.div<{ background?: string }>`
   margin: 0.6rem;
-  height: 4rem;
+  height: 2.5rem;
   background-color: #ebf3fd;
   background-image: ${(props) => props.background};
   text-transform: uppercase;

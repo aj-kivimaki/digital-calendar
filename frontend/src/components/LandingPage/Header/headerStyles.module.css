@@ -9,3 +9,7 @@
   flex-direction: row;
 }
 
+.navLink:hover {
+  color: #ffcc00;
+
+}

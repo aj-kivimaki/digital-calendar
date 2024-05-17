@@ -1,4 +1,3 @@
-import { BannerTop } from "../components/LandingPage/banner/BannerTop";
 import { ParallaxProvider } from "react-scroll-parallax";
 import Login from "./Login";
 import Favourite from "./Favourite";
@@ -19,7 +18,6 @@ const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     <div>
       <ParallaxProvider>
         <Ban></Ban>
-        {/* <BannerTop /> */}
         <MainPricing ></MainPricing>
         <div style={{ marginBottom: "250px" }}>
           {!token && <Login />}

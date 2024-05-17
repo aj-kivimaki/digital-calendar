@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import './image.css'
 
 const ImageReveal: React.FC = () => {
   const revealRef = useRef<HTMLDivElement>(null);

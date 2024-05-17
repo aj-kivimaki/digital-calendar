@@ -3,6 +3,13 @@ import Pricing from "./Pricing";
 
 function App() {
   return (
+    <>
+    <div style={{textAlign: "center",
+    fontSize: "22px",
+    marginBottom: "2rem"}}>
+      <h1>Our Pricing</h1>
+      <p>Choose the plan that fits your needs</p>
+    </div>
     <MainContainer>
       <div className="pricing-component">
         <Pricing
@@ -53,6 +60,7 @@ function App() {
         />
       </div>
     </MainContainer>
+    </>
   );
 }
 
@@ -61,11 +69,12 @@ display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 9rem 0;
-
+  border-radius: 1.6rem;
   @media screen and (max-width: 970px) {
     flex-direction: column;
     padding: 5rem 0;
     height: auto;
+    
   }
 
   @media screen and (min-width: 971px) and (max-width: 1200px) {
