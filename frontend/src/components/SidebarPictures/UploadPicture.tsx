@@ -2,6 +2,7 @@ import React from "react";
 import ExistingImageGallery from "./ExistingImageGallery";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import axios from "axios";
+import "./ExistingImageGallery.css";
 
 interface UploadPictureProps {
   setSelectedBackground: (backgroundUrl: string) => void;
@@ -58,6 +59,7 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
     <div>
       <label htmlFor="upload">Upload Image:</label>
       <input
+      className="choosefile"
         id="upload"
         type="file"
         accept="image/*"
@@ -73,17 +75,6 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
           onImageSelect={handleBackgroundSelect}
         />
       </div>
-
-      {selectedBackground && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Selected Background:</h3>
-          <img
-            src={selectedBackground}
-            alt="Selected Background"
-            style={{ maxWidth: "100%" }}
-          />
-        </div>
-      )}
     </div>
   );
 };

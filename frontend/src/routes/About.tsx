@@ -52,10 +52,10 @@ const About = () => {
             <GitHubIcon className="github"/>
           </a>
           <p>Tahashin Anika</p>
-          <a target="_blank" href="">
+          <a target="_blank" href="https://www.linkedin.com/in/anikatahashin90">
             <LinkedInIcon className="linkedin"/>
           </a>
-          <a target="_blank" href="">
+          <a target="_blank" href="https://github.com/AnikaTahashin10">
             <GitHubIcon className="github"/>
           </a>
           </div>
