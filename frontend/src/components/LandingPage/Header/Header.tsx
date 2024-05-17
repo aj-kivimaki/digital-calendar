@@ -88,7 +88,7 @@ const Header: React.FC = () => {
   };
 
   return (
-<AppBar position="static" sx={{ backgroundColor: "transparent", zIndex: 1 }}>
+<AppBar position="static" sx={{ backgroundColor: "black", zIndex: 1 }}>
         <Toolbar>
         <Link to="/" style={{ textDecoration: "none" }}>
   <img src={yodaLogo} alt="Yoda Logo" style={{ height: "30px", marginRight: "10px", cursor: "pointer" }} />
